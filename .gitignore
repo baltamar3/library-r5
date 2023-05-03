@@ -1,0 +1,23 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.DS_Store
+# C extensions
+*.so
+
+# Compiled files
+*.pyc
+
+# Database files
+db.sqlite3
+
+# Environment
+.env
+.docker/
+
+# Media files
+media/
+
+# Editors
+.vscode
