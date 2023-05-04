@@ -23,3 +23,18 @@ class BookQueries(graphene.ObjectType):
         if not qs:
             pass
         return qs
+
+
+class DeleteBook(graphene.Mutation):
+    class Arguments:
+        # The input arguments for this mutation
+        id = graphene.ID(required=True)
+
+    # The class attributes define the response of the mutation
+    book = graphene.Field(BookType)
+
+    def mutate(root, info, id):
+        book = Book.objects.get(pk=id)
+        if book is not None:
+            book.delete()
+        return DeleteBook(book=book)

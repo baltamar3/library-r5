@@ -1,7 +1,8 @@
 import graphene
+import graphql_jwt
 
 
-from .book.schema import BookQueries
+from .book.schema import BookQueries, DeleteBook
 
 
 class Query(BookQueries):
@@ -10,4 +11,8 @@ class Query(BookQueries):
     node = graphene.Node.Field()
 
 
-schema = graphene.Schema(query=Query)
+class Mutation(graphene.ObjectType):
+    delete_book = DeleteBook.Field()
+
+
+schema = graphene.Schema(query=Query, mutation=Mutation)
