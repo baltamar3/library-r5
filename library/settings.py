@@ -88,7 +88,18 @@ DATABASES = {"default": dj_database_url.config(default=DATABASE_URL, conn_max_ag
 
 GRAPHENE = {
     "SCHEMA": "graphql_api.api.schema",  # Where your Graphene schema lives
-    "MIDDLEWARE": [],
+    "MIDDLEWARE": [
+        "graphql_jwt.middleware.JSONWebTokenMiddleware",
+    ],
+}
+
+AUTHENTICATION_BACKENDS = [
+    "graphql_jwt.backends.JSONWebTokenBackend",
+    "django.contrib.auth.backends.ModelBackend",
+]
+
+GRAPHQL_JWT = {
+    "JWT_AUTH_HEADER_PREFIX": "Bearer",
 }
 
 # Password validation
