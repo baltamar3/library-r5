@@ -10,4 +10,5 @@ class BookType(graphene.ObjectType):
     publication_date = graphene.String()
     categories = graphene.List(graphene.String)
     authors = graphene.List(graphene.String)
+    image = graphene.String()
     source = graphene.String()

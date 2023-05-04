@@ -10,6 +10,7 @@ class Book(models.Model):
     publication_date = models.DateTimeField(auto_now_add=True)
     publisher = models.CharField("publisher", max_length=128)
     description = models.TextField(verbose_name="description")
+    image = models.ImageField(upload_to="books", blank=True, null=True)
 
     class Meta:
         verbose_name = "Book"
@@ -20,8 +21,8 @@ class Book(models.Model):
         return self.title
 
 
-Book.objects.create(
-    title="Aventuras denjuaniro",
-    authors=["Brayan Altamar"],
-    categories=["horror", "romance"],
-)
+# Book.objects.create(
+#     title="Aventuras denjuaniro",
+#     authors=["Brayan Altamar"],
+#     categories=["horror", "romance"],
+# )

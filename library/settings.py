@@ -10,8 +10,14 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+import os
+import ast
 from pathlib import Path
 import dj_database_url
+
+from dotenv import load_dotenv
+
+load_dotenv()  # take environment variables from .env.
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -32,6 +38,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "storages",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -78,9 +85,7 @@ WSGI_APPLICATION = "library.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-# DATABASE_URL = os.environ.get("DATABASE_URL")
-DATABASE_URL = "postgres://postgres:znzddnZWPWeiOHNL@db.jsoiwnelqqtteqesjtkz.supabase.co:6543/postgres"
-
+DATABASE_URL = os.environ.get("DATABASE_URL")
 DATABASES = {"default": dj_database_url.config(default=DATABASE_URL, conn_max_age=600)}
 
 
@@ -139,6 +144,29 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = "/static/"
+
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_URL = "/media/"
+
+# AWS general setup
+
+USE_AWS = ast.literal_eval(os.environ.get("USE_AWS", "True"))
+AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
+AWS_S3_REGION_NAME = os.environ.get("AWS_S3_REGION_NAME", "us-east-1")
+AWS_S3_CUSTOM_DOMAIN = os.environ.get("AWS_S3_CUSTOM_DOMAIN")
+
+
+if USE_AWS:
+    AWS_MEDIA_BUCKET_NAME = os.environ.get(
+        "AWS_MEDIA_BUCKET_NAME"
+    )  # Used for media files
+    AWS_QUERYSTRING_AUTH = ast.literal_eval(
+        os.environ.get("AWS_QUERYSTRING_AUTH", "False")
+    )
+
+    if AWS_MEDIA_BUCKET_NAME:
+        DEFAULT_FILE_STORAGE = "core.storages.MediaStorage"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
