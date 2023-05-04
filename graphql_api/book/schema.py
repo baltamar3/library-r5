@@ -1,0 +1,25 @@
+import graphene
+
+# from core.services.google.books import search_book
+
+from . import BOOK_SEARCH_FIELDS
+from ..utils import filter_by_query_param
+from ..descriptions import DESCRIPTIONS
+from .types import BookType
+from book.models import Book
+
+from django.db.models import Value
+
+
+class BookQueries(graphene.ObjectType):
+    books = graphene.List(
+        BookType,
+        query=graphene.String(required=True, description=DESCRIPTIONS["books"]),
+    )
+
+    def resolve_books(root, info, query):
+        books = Book.objects.all().annotate(source=Value("db"))
+        qs = filter_by_query_param(books, query, BOOK_SEARCH_FIELDS)
+        if not qs:
+            pass
+        return qs
