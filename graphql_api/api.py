@@ -2,7 +2,7 @@ import graphene
 import graphql_jwt
 
 
-from .book.schema import BookQueries, DeleteBook
+from .book.schema import BookQueries, CreateBook, DeleteBook
 
 
 class Query(BookQueries):
@@ -12,6 +12,7 @@ class Query(BookQueries):
 
 
 class Mutation(graphene.ObjectType):
+    create_book = CreateBook.Field()
     delete_book = DeleteBook.Field()
     # Auth mutations
     token_auth = graphql_jwt.ObtainJSONWebToken.Field()

@@ -1,5 +1,3 @@
-import graphene
-
 from core.services.google_books import search_book as search_book_in_google
 from core.services.gutendex import search_book as search_book_in_gutendex
 
@@ -7,16 +5,22 @@ from . import BOOK_SEARCH_FIELDS
 from ..utils import filter_by_query_param
 from ..descriptions import DESCRIPTIONS
 from .types import BookType
+from .forms import BookForm
 from book.models import Book
 
-from django.db.models import Value
+import graphene
 from graphql_jwt.decorators import login_required
+from graphene_django.forms.mutation import DjangoFormMutation
+from django.db.models import Value
 
 
 class BookQueries(graphene.ObjectType):
     books = graphene.List(
         BookType,
-        query=graphene.String(required=True, description=DESCRIPTIONS["books"]),
+        query=graphene.String(
+            required=True,
+            description=DESCRIPTIONS["books"],
+        ),
     )
 
     @login_required
@@ -72,3 +76,8 @@ class DeleteBook(graphene.Mutation):
         if book is not None:
             book.delete()
         return DeleteBook(book=book)
+
+
+class CreateBook(DjangoFormMutation):
+    class Meta:
+        form_class = BookForm
