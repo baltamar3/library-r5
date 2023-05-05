@@ -3,12 +3,12 @@ from django.contrib.postgres.fields import ArrayField
 
 
 class Book(models.Model):
-    title = models.CharField("title", max_length=128)
-    subtitle = models.CharField("subtitle", max_length=128)
-    authors = ArrayField(models.CharField(max_length=100), verbose_name="authors")
-    categories = ArrayField(models.CharField(max_length=100), verbose_name="categories")
-    publication_date = models.DateTimeField(auto_now_add=True)
-    publisher = models.CharField("publisher", max_length=128)
+    title = models.CharField("title", max_length=350)
+    subtitle = models.CharField("subtitle", max_length=350)
+    authors = ArrayField(models.CharField(max_length=350), verbose_name="authors")
+    categories = ArrayField(models.CharField(max_length=350), verbose_name="categories")
+    publication_date = models.CharField(max_length=350)
+    publisher = models.CharField("publisher", max_length=350)
     description = models.TextField(verbose_name="description")
     image = models.ImageField(upload_to="books", blank=True, null=True)
 
@@ -19,10 +19,3 @@ class Book(models.Model):
 
     def __str__(self):
         return self.title
-
-
-# Book.objects.create(
-#     title="Aventuras denjuaniro",
-#     authors=["Brayan Altamar"],
-#     categories=["horror", "romance"],
-# )

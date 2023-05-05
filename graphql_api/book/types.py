@@ -2,6 +2,10 @@ import graphene
 
 
 class BookType(graphene.ObjectType):
+    """
+    A simple Book schema
+    """
+
     id = graphene.String()
     title = graphene.String()
     subtitle = graphene.String()
