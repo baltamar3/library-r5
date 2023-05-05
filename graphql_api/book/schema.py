@@ -81,3 +81,8 @@ class DeleteBook(graphene.Mutation):
 class CreateBook(DjangoFormMutation):
     class Meta:
         form_class = BookForm
+
+    @classmethod
+    @login_required
+    def mutate(cls, root, info, input):
+        return super().mutate(root, info, input)
