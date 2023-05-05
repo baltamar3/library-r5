@@ -64,8 +64,8 @@ class BookForm(forms.Form):
                     title=book_google["volumeInfo"].get("title"),
                     subtitle=book_google["volumeInfo"].get("subtitle", ""),
                     publisher=book_google["volumeInfo"].get("publisher"),
-                    publication_date=book_google["volumeInfo"].get("publishedDate"),
-                    description=book_google["volumeInfo"].get("description"),
+                    publication_date=book_google["volumeInfo"].get("publishedDate", ""),
+                    description=book_google["volumeInfo"].get("description", ""),
                     categories=book_google["volumeInfo"].get("categories", []),
                     authors=book_google["volumeInfo"].get("authors", []),
                 )
